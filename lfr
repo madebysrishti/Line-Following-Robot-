@@ -1,0 +1,67 @@
+// ---- Pin Definitions ----
+#define LEFT_SENSOR  2
+#define RIGHT_SENSOR 3
+
+#define IN1 6   // Left motor
+#define IN2 7
+#define IN3 8   // Right motor
+#define IN4 9
+
+// ---- Motor Functions ----
+void goStraight() {
+  digitalWrite(IN1, HIGH); digitalWrite(IN2, LOW);  // Left forward
+  digitalWrite(IN3, HIGH); digitalWrite(IN4, LOW);  // Right forward
+}
+
+void turnLeft() {
+  digitalWrite(IN1, LOW);  digitalWrite(IN2, LOW);  // Left stop
+  digitalWrite(IN3, HIGH); digitalWrite(IN4, LOW);  // Right forward
+}
+
+void turnRight() {
+  digitalWrite(IN1, HIGH); digitalWrite(IN2, LOW);  // Left forward
+  digitalWrite(IN3, LOW);  digitalWrite(IN4, LOW);  // Right stop
+}
+
+void stopRobot() {
+  digitalWrite(IN1, LOW); digitalWrite(IN2, LOW);
+  digitalWrite(IN3, LOW); digitalWrite(IN4, LOW);
+}
+
+// ---- Setup ----
+void setup() {
+  pinMode(LEFT_SENSOR,  INPUT);
+  pinMode(RIGHT_SENSOR, INPUT);
+
+  pinMode(IN1, OUTPUT); pinMode(IN2, OUTPUT);
+  pinMode(IN3, OUTPUT); pinMode(IN4, OUTPUT);
+
+  Serial.begin(9600); // For debugging
+}
+
+// ---- Main Loop ----
+void loop() {
+  int left  = digitalRead(LEFT_SENSOR);
+  int right = digitalRead(RIGHT_SENSOR);
+
+  // Debug — open Serial Monitor to check sensor values
+  Serial.print("L:"); Serial.print(left);
+  Serial.print(" R:"); Serial.println(right);
+
+  // LOW = sensor on black line
+  // HIGH = sensor on white surface
+  // (flip if your robot behaves oppositely)
+
+  if (left == LOW && right == LOW) {
+    goStraight();   // Both on line — go forward
+  }
+  else if (left == HIGH && right == LOW) {
+    turnLeft();     // Right on line, left off — turn left
+  }
+  else if (left == LOW && right == HIGH) {
+    turnRight();    // Left on line, right off — turn right
+  }
+  else {
+    stopRobot();    // Both off line — stop
+  }
+}
