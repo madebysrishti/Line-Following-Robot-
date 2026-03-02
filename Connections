@@ -1,0 +1,29 @@
+Connections
+IR Sensors → Arduino Nano
+IR Sensor          Arduino Nano
+Left Sensor OUT        D2
+Right Sensor OUT       D3
+VCC                    5V
+GND                    GND
+
+L293D Module → Arduino Nano
+L293D Module      Arduino Nano
+IN1                    D6
+IN2                    D7
+IN3                    D8
+IN4                    D9
+5V                     5V
+GND                    GND
+
+L293D Module → Battery & Motors
+L293D Module       Connect To
+9V pin                 Battery + (7.4V)
+GND                    Battery −
+Motor A                Left N20 Motor
+Motor B                Right N20 Motor
+
+Battery
+Battery 1           Battery 2
++ (red)                 − (black) joined together
+− (black)               → L293D GND
+                        + (red) → L293D 9V
